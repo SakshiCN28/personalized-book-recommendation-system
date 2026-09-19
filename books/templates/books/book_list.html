@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Book Recommendation System</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f5f2ec;
+
+            color: #292943;
+
+        }
+
+
+        /* =================================
+           HEADER
+        ================================= */
+
+        header {
+
+            background: #292943;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 22px;
+
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+            font-size: 25px;
+
+        }
+
+
+        header p {
+
+            margin: 8px 0 12px;
+
+        }
+
+
+        header a {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            color: #292943;
+
+            background: white;
+
+            padding: 8px 15px;
+
+            margin: 4px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+        }
+
+
+        header a:hover {
+
+            opacity: 0.85;
+
+        }
+
+
+        /* =================================
+           MAIN CONTAINER
+        ================================= */
+
+        .container {
+
+            width: 85%;
+
+            max-width: 1100px;
+
+            margin: 25px auto;
+
+        }
+
+
+        /* =================================
+           PREFERENCE BOX
+        ================================= */
+
+        .preference-box {
+
+            background: white;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .preference-box h3 {
+
+            margin-top: 0;
+
+        }
+
+
+        .preference-box a {
+
+            color: #4f527d;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+        }
+
+
+        /* =================================
+           SECTION TITLE
+        ================================= */
+
+        .section-title {
+
+            margin-top: 22px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        /* =================================
+           SEARCH
+        ================================= */
+
+        .search-box {
+
+            display: flex;
+
+            gap: 5px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .search-box input {
+
+            flex: 1;
+
+            padding: 11px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+        }
+
+
+        button {
+
+            background: #4f527d;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 16px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+        }
+
+
+        button:hover {
+
+            opacity: 0.9;
+
+        }
+
+
+        /* =================================
+           GENRE FILTER
+        ================================= */
+
+        .genre-form {
+
+            display: flex;
+
+            gap: 5px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .genre-form select {
+
+            padding: 10px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            min-width: 160px;
+
+        }
+
+
+        /* =================================
+           RECOMMENDATION BOX
+        ================================= */
+
+        .recommendation-box {
+
+            background: #e9e7f5;
+
+            padding: 16px;
+
+            border-radius: 8px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .recommendation-box h3 {
+
+            margin-top: 0;
+
+        }
+
+
+        .recommendation-box ul {
+
+            margin-bottom: 0;
+
+            padding-left: 22px;
+
+        }
+
+
+        .recommendation-box li {
+
+            margin: 5px 0;
+
+        }
+
+
+        /* =================================
+           BOOK GRID
+        ================================= */
+
+        .book-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(230px, 1fr)
+                );
+
+            gap: 18px;
+
+        }
+
+
+        /* =================================
+           BOOK CARD
+        ================================= */
+
+        .book-card {
+
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 14px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+
+            transition: transform 0.2s;
+
+        }
+
+
+        .book-card:hover {
+
+            transform: translateY(-3px);
+
+        }
+
+
+        /* =================================
+           RECOMMENDED BADGE
+        ================================= */
+
+        .recommended-badge {
+
+            display: inline-block;
+
+            background: #4f527d;
+
+            color: white;
+
+            padding: 5px 9px;
+
+            border-radius: 15px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        /* =================================
+           BOOK COVER
+        ================================= */
+
+        .book-cover {
+
+            width: 100%;
+
+            height: 230px;
+
+            background: #f1f1f1;
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .book-cover img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+        }
+
+
+        /* =================================
+           BOOK INFORMATION
+        ================================= */
+
+        .book-card h3 {
+
+            margin: 8px 0;
+
+            font-size: 18px;
+
+        }
+
+
+        .book-card h3 a {
+
+            color: #292943;
+
+            text-decoration: none;
+
+        }
+
+
+        .book-card h3 a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        .book-card p {
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .genre-tag {
+
+            display: inline-block;
+
+            background: #eeeeee;
+
+            padding: 5px 9px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+        }
+
+
+        .rating {
+
+            font-weight: bold;
+
+        }
+
+
+        /* =================================
+           EMPTY MESSAGE
+        ================================= */
+
+        .empty-message {
+
+            background: white;
+
+            padding: 25px;
+
+            text-align: center;
+
+            border-radius: 10px;
+
+        }
+
+
+        /* =================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                width: 94%;
+
+            }
+
+
+            .search-box,
+            .genre-form {
+
+                flex-direction: column;
+
+            }
+
+
+            .genre-form select {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+    <h1>
+        📚 Book Recommendation System
+    </h1>
+
+
+    {% if user.is_authenticated %}
+
+        <p>
+            👋 Welcome, {{ user.username }}!
+        </p>
+
+
+        <!-- Dashboard -->
+
+        <a href="{% url 'dashboard' %}">
+            📊 Dashboard
+        </a>
+
+
+        <!-- Profile -->
+
+        <a href="{% url 'profile' %}">
+            👤 My Profile
+        </a>
+
+
+        <!-- Favorites -->
+
+        <a href="{% url 'favorites' %}">
+            ❤️ My Favorites
+        </a>
+
+
+        <!-- Logout -->
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+
+    {% else %}
+
+        <a href="{% url 'login' %}">
+            Login
+        </a>
+
+
+        <a href="{% url 'register' %}">
+            Create Account
+        </a>
+
+    {% endif %}
+
+</header>
+
+
+
+<!-- =================================
+     MAIN CONTAINER
+================================= -->
+
+<div class="container">
+
+
+    <!-- =================================
+         USER PREFERENCE
+    ================================= -->
+
+    {% if user.is_authenticated %}
+
+        <div class="preference-box">
+
+            <h3>
+                ⭐ Your Reading Preference
+            </h3>
+
+
+            {% if profile.favorite_genre %}
+
+                <p>
+
+                    Your favorite genre is
+
+                    <strong>
+                        {{ profile.favorite_genre }}
+                    </strong>.
+
+                </p>
+
+            {% else %}
+
+                <p>
+
+                    You have not selected a
+                    favorite genre yet.
+
+                </p>
+
+            {% endif %}
+
+
+            <a href="{% url 'profile' %}">
+                Change my preference →
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+
+    <!-- =================================
+         SEARCH
+    ================================= -->
+
+    <h2 class="section-title">
+        🔍 Find Books
+    </h2>
+
+
+    <form
+        method="GET"
+        action="{% url 'book_list' %}"
+        class="search-box"
+    >
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search by title, author or genre..."
+            value="{{ search_query }}"
+        >
+
+
+        <button type="submit">
+            Search 🔎
+        </button>
+
+    </form>
+
+
+
+    <!-- =================================
+         GENRE FILTER
+    ================================= -->
+
+    <h3>
+        📚 Choose a Genre
+    </h3>
+
+
+    <form
+        method="GET"
+        action="{% url 'book_list' %}"
+        class="genre-form"
+    >
+
+        <select name="genre">
+
+            <option value="">
+                All Genres
+            </option>
+
+
+            {% for genre in genres %}
+
+                <option
+                    value="{{ genre }}"
+                    {% if selected_genre == genre %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ genre }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <button type="submit">
+            Filter Books
+        </button>
+
+    </form>
+
+
+
+    <!-- =================================
+         RECOMMENDATION SECTION
+    ================================= -->
+
+    {% if user.is_authenticated %}
+
+        <h2 class="section-title">
+            ✨ Recommended For You
+        </h2>
+
+
+        <div class="recommendation-box">
+
+            <h3>
+                🤖 Personalized Recommendations
+            </h3>
+
+
+            <p>
+                Books are recommended based on
+                your reading activity.
+            </p>
+
+
+            <ul>
+
+                <li>
+                    ⭐ Your favorite genre
+                </li>
+
+                <li>
+                    ⭐ Books you rated highly
+                </li>
+
+                <li>
+                    ❤️ Books you saved as favorites
+                </li>
+
+                <li>
+                    📖 Overall book rating
+                </li>
+
+            </ul>
+
+        </div>
+
+    {% endif %}
+
+
+
+    <!-- =================================
+         ALL BOOKS
+    ================================= -->
+
+    <h2 class="section-title">
+        📚 Explore All Books
+    </h2>
+
+
+    {% if books %}
+
+
+        <div class="book-grid">
+
+
+            {% for book in books %}
+
+
+                <div class="book-card">
+
+
+                    <!-- Recommended Badge -->
+
+                    {% if book.is_recommended %}
+
+                        <span class="recommended-badge">
+
+                            ⭐ Recommended For You
+
+                        </span>
+
+                    {% endif %}
+
+
+
+                    <!-- Book Cover -->
+
+                    {% if book.cover_image %}
+
+                        <div class="book-cover">
+
+                            <img
+                                src="{{ book.cover_image }}"
+                                alt="{{ book.title }} cover"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- Book Title -->
+
+                    <h3>
+
+                        <a
+                            href="{% url 'book_detail' book.id %}"
+                        >
+
+                            {{ book.title }}
+
+                        </a>
+
+                    </h3>
+
+
+
+                    <!-- Author -->
+
+                    <p>
+
+                        <strong>
+                            Author:
+                        </strong>
+
+                        {{ book.author }}
+
+                    </p>
+
+
+
+                    <!-- Genre -->
+
+                    <p>
+
+                        <span class="genre-tag">
+
+                            {{ book.genre }}
+
+                        </span>
+
+                    </p>
+
+
+
+                    <!-- Description -->
+
+                    <p>
+
+                        {{ book.description }}
+
+                    </p>
+
+
+
+                    <!-- Rating -->
+
+                    <p class="rating">
+
+                        ⭐ {{ book.rating }}
+
+                    </p>
+
+
+
+                    <!-- Language -->
+
+                    <p>
+
+                        <strong>
+                            Language:
+                        </strong>
+
+                        {{ book.language }}
+
+                    </p>
+
+
+
+                    <!-- Publication Year -->
+
+                    <p>
+
+                        <strong>
+                            Published:
+                        </strong>
+
+                        {{ book.publication_year }}
+
+                    </p>
+
+
+
+                    <!-- Details Button -->
+
+                    <a
+                        href="{% url 'book_detail' book.id %}"
+                        style="
+                            display:inline-block;
+                            margin-top:8px;
+                            padding:8px 12px;
+                            background:#4f527d;
+                            color:white;
+                            text-decoration:none;
+                            border-radius:6px;
+                            font-size:12px;
+                        "
+                    >
+
+                        View Details →
+
+                    </a>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="empty-message">
+
+            <h3>
+                📚 No books found
+            </h3>
+
+
+            <p>
+                Try another search or genre.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

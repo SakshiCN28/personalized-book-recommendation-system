@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | Book Recommendation System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eee9f7;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-box {
+            width: 500px;
+            background: white;
+            padding: 45px;
+            border-radius: 20px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .icon {
+            text-align: center;
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #22223b;
+            margin-bottom: 8px;
+        }
+
+        .welcome {
+            text-align: center;
+            color: #777;
+            margin-bottom: 35px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        select {
+            width: 100%;
+            padding: 14px;
+
+            border: 1px solid #ccc;
+            border-radius: 10px;
+
+            font-size: 15px;
+            background: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+
+            margin-top: 25px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #4a4e69;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #22223b;
+        }
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #4a4e69;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="profile-box">
+
+        <div class="icon">
+            👤
+        </div>
+
+
+        <h1>
+            My Reading Profile
+        </h1>
+
+
+        <p class="welcome">
+            Hello {{ user.username }}! Choose your favorite genre.
+        </p>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <label>
+                📚 My Favorite Genre
+            </label>
+
+
+            <select name="favorite_genre">
+
+                <option value="">
+                    Select a genre
+                </option>
+
+
+                {% for genre in genres %}
+
+                <option
+                    value="{{ genre }}"
+                    {% if profile.favorite_genre == genre %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ genre }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <button type="submit">
+
+                Save My Preference ⭐
+
+            </button>
+
+        </form>
+
+
+        <a
+            href="{% url 'book_list' %}"
+            class="back"
+        >
+
+            ← Back to Books
+
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

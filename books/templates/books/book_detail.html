@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ book.title }} - Book Details</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f2eb;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(
+                135deg,
+                #4b4e73,
+                #252744
+            );
+
+            color: white;
+            padding: 25px 7%;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1300px;
+            margin: 50px auto;
+        }
+
+        .book-details {
+            background: white;
+            border-radius: 25px;
+            padding: 45px;
+            display: flex;
+            gap: 70px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .cover-section {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .cover-section img {
+            width: 400px;
+            max-width: 100%;
+            height: 580px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .details-section {
+            flex: 1;
+        }
+
+        .details-section h2 {
+            font-size: 48px;
+            color: #252744;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .author {
+            font-size: 22px;
+            margin-bottom: 30px;
+        }
+
+        .genre {
+            display: inline-block;
+            background: #e9edf1;
+            padding: 12px 20px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .description {
+            font-size: 20px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .rating {
+            font-size: 25px;
+            font-weight: bold;
+            color: #d47a00;
+            margin-bottom: 25px;
+        }
+
+        .info {
+            font-size: 19px;
+            margin: 18px 0;
+        }
+
+        /* Message */
+
+        .message {
+            background: #e7f7e9;
+            color: #267337;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Favorite Button */
+
+        .favorite-box {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .favorite-button {
+            border: none;
+            padding: 14px 25px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .add-favorite {
+            background: #ffe4e8;
+            color: #c43d58;
+        }
+
+        .add-favorite:hover {
+            background: #ffd2da;
+        }
+
+        .remove-favorite {
+            background: #c43d58;
+            color: white;
+        }
+
+        .remove-favorite:hover {
+            background: #a82f47;
+        }
+
+        .login-message {
+            color: #555;
+            font-size: 17px;
+        }
+
+        /* Rating Box */
+
+        .rating-box {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f5f6fa;
+            border-radius: 18px;
+        }
+
+        .rating-box h3 {
+            margin-top: 0;
+            color: #252744;
+            font-size: 23px;
+        }
+
+        .rating-options {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .rating-options label {
+            cursor: pointer;
+        }
+
+        .rating-options input {
+            margin-right: 5px;
+        }
+
+        .submit-rating {
+            background: #4b4e73;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-rating:hover {
+            background: #353856;
+        }
+
+        /* Back Button */
+
+        .back-button {
+            display: inline-block;
+            margin-top: 35px;
+            background: #4b4e73;
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            background: #353856;
+        }
+
+        @media (max-width: 900px) {
+
+            .book-details {
+                flex-direction: column;
+            }
+
+            .cover-section {
+                width: 100%;
+            }
+
+            .details-section h2 {
+                font-size: 36px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>📚 Book Details</h1>
+
+</header>
+
+
+<div class="container">
+
+    <div class="book-details">
+
+
+        <!-- Book Cover -->
+
+        <div class="cover-section">
+
+            {% if book.cover_image %}
+
+                <img
+                    src="{{ book.cover_image }}"
+                    alt="{{ book.title }}"
+                >
+
+            {% else %}
+
+                <div style="font-size: 100px;">
+                    📖
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Book Information -->
+
+        <div class="details-section">
+
+
+            <h2>
+                {{ book.title }}
+            </h2>
+
+
+            <div class="author">
+
+                <strong>Author:</strong>
+                {{ book.author }}
+
+            </div>
+
+
+            <div class="genre">
+
+                📚 {{ book.genre }}
+
+            </div>
+
+
+            <div class="description">
+
+                {{ book.description }}
+
+            </div>
+
+
+            <div class="rating">
+
+                ⭐ {{ book.rating }} / 5
+
+            </div>
+
+
+            <div class="info">
+
+                🌐
+                <strong>Language:</strong>
+                {{ book.language }}
+
+            </div>
+
+
+            <div class="info">
+
+                📅
+                <strong>Publication Year:</strong>
+                {{ book.publication_year }}
+
+            </div>
+
+
+            <!-- Django Messages -->
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="message">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+
+            <!-- Favorite Section -->
+
+            {% if user.is_authenticated %}
+
+                <div class="favorite-box">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="action"
+                            value="favorite"
+                        >
+
+
+                        {% if is_favorite %}
+
+                            <button
+                                type="submit"
+                                class="favorite-button remove-favorite"
+                            >
+                                💔 Remove from Favorites
+                            </button>
+
+                        {% else %}
+
+                            <button
+                                type="submit"
+                                class="favorite-button add-favorite"
+                            >
+                                ❤️ Add to Favorites
+                            </button>
+
+                        {% endif %}
+
+                    </form>
+
+                </div>
+
+            {% else %}
+
+                <div class="favorite-box">
+
+                    <p class="login-message">
+
+                        🔐 Please login to save this book
+                        to your favorites.
+
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- Rating Section -->
+
+            {% if user.is_authenticated %}
+
+                <div class="rating-box">
+
+                    <h3>
+                        ⭐ My Rating
+                    </h3>
+
+
+                    {% if user_rating %}
+
+                        <p>
+
+                            Your current rating:
+
+                            <strong>
+                                ⭐ {{ user_rating.rating }} / 5
+                            </strong>
+
+                        </p>
+
+                        <p>
+                            You can change your rating below.
+                        </p>
+
+                    {% else %}
+
+                        <p>
+                            Give this book your own rating:
+                        </p>
+
+                    {% endif %}
+
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="action"
+                            value="rating"
+                        >
+
+
+                        <div class="rating-options">
+
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="rating"
+                                    value="1.0"
+
+                                    {% if user_rating and user_rating.rating == 1.0 %}
+                                        checked
+                                    {% endif %}
+                                >
+
+                                ⭐ 1
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="rating"
+                                    value="2.0"
+
+                                    {% if user_rating and user_rating.rating == 2.0 %}
+                                        checked
+                                    {% endif %}
+                                >
+
+                                ⭐ 2
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="rating"
+                                    value="3.0"
+
+                                    {% if user_rating and user_rating.rating == 3.0 %}
+                                        checked
+                                    {% endif %}
+                                >
+
+                                ⭐ 3
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="rating"
+                                    value="4.0"
+
+                                    {% if user_rating and user_rating.rating == 4.0 %}
+                                        checked
+                                    {% endif %}
+                                >
+
+                                ⭐ 4
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="rating"
+                                    value="5.0"
+
+                                    {% if user_rating and user_rating.rating == 5.0 %}
+                                        checked
+                                    {% endif %}
+                                >
+
+                                ⭐ 5
+
+                            </label>
+
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="submit-rating"
+                        >
+                            Submit Rating
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- Back Button -->
+
+            <a
+                href="{% url 'book_list' %}"
+                class="back-button"
+            >
+                ← Back to Books
+            </a>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Dashboard</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f5f2ec;
+
+            color: #292943;
+
+        }
+
+
+        /* -----------------------------
+           Header
+        ----------------------------- */
+
+        header {
+
+            background: #292943;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+        }
+
+
+        header p {
+
+            margin: 8px 0;
+
+        }
+
+
+        header a {
+
+            display: inline-block;
+
+            background: white;
+
+            color: #292943;
+
+            text-decoration: none;
+
+            padding: 8px 14px;
+
+            margin: 5px;
+
+            border-radius: 6px;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+        }
+
+
+        /* -----------------------------
+           Main Container
+        ----------------------------- */
+
+        .container {
+
+            width: 85%;
+
+            max-width: 1100px;
+
+            margin: 30px auto;
+
+        }
+
+
+        /* -----------------------------
+           Welcome Box
+        ----------------------------- */
+
+        .welcome-box {
+
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+
+        }
+
+
+        .welcome-box h2 {
+
+            margin-top: 0;
+
+        }
+
+
+        /* -----------------------------
+           Statistics
+        ----------------------------- */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 18px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+
+        }
+
+
+        .stat-card .icon {
+
+            font-size: 30px;
+
+        }
+
+
+        .stat-card h3 {
+
+            margin: 10px 0 5px;
+
+            font-size: 28px;
+
+        }
+
+
+        .stat-card p {
+
+            margin: 0;
+
+            color: #666;
+
+        }
+
+
+        /* -----------------------------
+           Section
+        ----------------------------- */
+
+        .section {
+
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+
+        }
+
+
+        .section h2 {
+
+            margin-top: 0;
+
+        }
+
+
+        /* -----------------------------
+           Rating / Favorite Items
+        ----------------------------- */
+
+        .item {
+
+            padding: 14px;
+
+            border-bottom: 1px solid #eeeeee;
+
+        }
+
+
+        .item:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .item a {
+
+            color: #292943;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+        }
+
+
+        .item a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        .rating {
+
+            color: #555;
+
+            font-size: 14px;
+
+            margin-top: 5px;
+
+        }
+
+
+        /* -----------------------------
+           Empty State
+        ----------------------------- */
+
+        .empty {
+
+            color: #777;
+
+            padding: 10px 0;
+
+        }
+
+
+        /* -----------------------------
+           Buttons
+        ----------------------------- */
+
+        .button {
+
+            display: inline-block;
+
+            background: #4f527d;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 16px;
+
+            border-radius: 6px;
+
+            margin-top: 8px;
+
+        }
+
+
+        .button:hover {
+
+            opacity: 0.9;
+
+        }
+
+
+        /* -----------------------------
+           Responsive
+        ----------------------------- */
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                width: 94%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+    <h1>
+        📊 My Dashboard
+    </h1>
+
+
+    <p>
+        👋 Welcome, {{ user.username }}!
+    </p>
+
+
+    <a href="{% url 'book_list' %}">
+        📚 Browse Books
+    </a>
+
+
+    <a href="{% url 'profile' %}">
+        👤 My Profile
+    </a>
+
+
+    <a href="{% url 'favorites' %}">
+        ❤️ My Favorites
+    </a>
+
+
+    <a href="{% url 'logout' %}">
+        Logout
+    </a>
+
+</header>
+
+
+
+<!-- =================================
+     MAIN
+================================= -->
+
+<div class="container">
+
+
+    <!-- Welcome -->
+
+    <div class="welcome-box">
+
+        <h2>
+            📖 Your Reading Dashboard
+        </h2>
+
+
+        {% if profile.favorite_genre %}
+
+            <p>
+                Your favorite genre is
+                <strong>
+                    {{ profile.favorite_genre }}
+                </strong>.
+            </p>
+
+        {% else %}
+
+            <p>
+                You have not selected a favorite genre yet.
+            </p>
+
+        {% endif %}
+
+
+        <p>
+            Your reading activity is used to
+            personalize book recommendations.
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================
+         STATISTICS
+    ================================= -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                📚
+            </div>
+
+            <h3>
+                {{ total_books }}
+            </h3>
+
+            <p>
+                Books Available
+            </p>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                ⭐
+            </div>
+
+            <h3>
+                {{ total_ratings }}
+            </h3>
+
+            <p>
+                Books Rated
+            </p>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                ❤️
+            </div>
+
+            <h3>
+                {{ total_favorites }}
+            </h3>
+
+            <p>
+                Favorite Books
+            </p>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="icon">
+                📖
+            </div>
+
+            <h3>
+                {% if profile.favorite_genre %}
+                    {{ profile.favorite_genre }}
+                {% else %}
+                    Not Set
+                {% endif %}
+            </h3>
+
+            <p>
+                Favorite Genre
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         RECENT RATINGS
+    ================================= -->
+
+    <div class="section">
+
+        <h2>
+            ⭐ My Ratings
+        </h2>
+
+
+        {% if user_ratings %}
+
+
+            {% for rating in user_ratings %}
+
+                <div class="item">
+
+                    <a href="{% url 'book_detail' rating.book.id %}">
+
+                        {{ rating.book.title }}
+
+                    </a>
+
+
+                    <div class="rating">
+
+                        ⭐ You rated this book:
+
+                        <strong>
+                            {{ rating.rating }}/5
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <p class="empty">
+
+                You have not rated any books yet.
+
+            </p>
+
+
+            <a
+                href="{% url 'book_list' %}"
+                class="button"
+            >
+                Browse Books
+            </a>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- =================================
+         FAVORITE BOOKS
+    ================================= -->
+
+    <div class="section">
+
+        <h2>
+            ❤️ My Favorite Books
+        </h2>
+
+
+        {% if favorite_books %}
+
+
+            {% for favorite in favorite_books %}
+
+                <div class="item">
+
+                    <a
+                        href="{% url 'book_detail' favorite.book.id %}"
+                    >
+
+                        {{ favorite.book.title }}
+
+                    </a>
+
+
+                    <div class="rating">
+
+                        Author:
+                        {{ favorite.book.author }}
+
+                        <br>
+
+                        Genre:
+                        {{ favorite.book.genre }}
+
+                        <br>
+
+                        ⭐
+                        {{ favorite.book.rating }}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <p class="empty">
+
+                You have not saved any books yet.
+
+            </p>
+
+
+            <a
+                href="{% url 'book_list' %}"
+                class="button"
+            >
+                Find Books
+            </a>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
