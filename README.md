@@ -92,6 +92,7 @@ BookRecommendationSystem/
 ├── manage.py
 └── README.md
 
+---
 
 ## 📂 How to Run
 1. Open VS Code
@@ -104,6 +105,7 @@ BookRecommendationSystem/
 8. To login: 'http://127.0.0.1:8000/login/'
 9.  Or simply step 6
 
+---
 
 ## 👨‍💻 Author
 SAKSHI CN
