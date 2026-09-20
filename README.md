@@ -92,6 +92,7 @@ BookRecommendationSystem/
 ├── manage.py
 └── README.md
 
+
 ## 📂 How to Run
 1. Open VS Code
 2. Open folder C:\Users\SAKSHI C.N\OneDrive\Desktop\BookRecommendationSystem
@@ -102,6 +103,7 @@ BookRecommendationSystem/
 7. To register: 'http://127.0.0.1:8000/register/'
 8. To login: 'http://127.0.0.1:8000/login/'
 9.  Or simply step 6
+
 
 ## 👨‍💻 Author
 SAKSHI CN
