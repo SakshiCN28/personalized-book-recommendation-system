@@ -91,3 +91,5 @@ BookRecommendationSystem/
 ├── db.sqlite3
 ├── manage.py
 └── README.md
+👨‍💻 Author
+SAKSHI CN
