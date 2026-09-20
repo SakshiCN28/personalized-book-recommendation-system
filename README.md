@@ -91,5 +91,17 @@ BookRecommendationSystem/
 ├── db.sqlite3
 ├── manage.py
 └── README.md
-👨‍💻 Author
+
+## 📂 How to Run
+1. Open VS Code
+2. Open folder C:\Users\SAKSHI C.N\OneDrive\Desktop\BookRecommendationSystem
+3. Open the terminal and in terminal you should C:\Users\SAKSHI C.N\OneDrive\Desktop\BookRecommendationSystem 
+4. venv\Scripts\activate (To Activate your virtual environment, should type this in terminal)
+5. python manage.py runserver (Start Django)
+6. Open Chrome/Edge and search for 'http://127.0.0.1:8000/'
+7. To register: 'http://127.0.0.1:8000/register/'
+8. To login: 'http://127.0.0.1:8000/login/'
+9.  Or simply step 6
+
+## 👨‍💻 Author
 SAKSHI CN
